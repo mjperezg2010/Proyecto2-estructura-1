@@ -52,14 +52,19 @@ int main()
     string nombreArchivo;
     cin>>nombreArchivo;
     TablaFrecuencia tabla=Frecuencia(LeerArchivo(nombreArchivo));
+    tabla.LlenarTablaFrecuencia();
 
-   for (int i = 0; i < tabla.listaElementos.size(); i++)
+   /*for (int i = 0; i < tabla.listaElementos.size(); i++)
     {
         cout << tabla.listaElementos[i] << " - " << tabla.listaFrecuencia[i]<<endl;
-    }
+    }*/
 
     //Creacion del arbol
     //while()
+
+    for(int i=0;i<tabla.listaTablaFrecuencia.size();i++){
+        cout<<tabla.listaTablaFrecuencia[i].element<< " - "<<tabla.listaTablaFrecuencia[i].frequency<<endl;
+    }
 
 
 
@@ -139,7 +144,7 @@ TablaFrecuencia Frecuencia(string archivo)
             contador = 1;
         }
     }
-    cout << endl;
+   
 
     //Ordenar posiciones
     int aux;

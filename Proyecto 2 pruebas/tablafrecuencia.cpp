@@ -9,6 +9,16 @@ TablaFrecuencia::TablaFrecuencia(){
 
 }
 
+void TablaFrecuencia::LlenarTablaFrecuencia(){
+    for(int i=0;i<listaElementos.size();i++){
+        TreeElement temporal;
+        temporal.element=listaElementos[i];
+        temporal.frequency=listaFrecuencia[i];
+        listaTablaFrecuencia.push_back(temporal);
+    }
+}
+
+
 /*
 void TablaFrecuencia::CrearTabla(string archivo){
      string archivo1 = archivo;
