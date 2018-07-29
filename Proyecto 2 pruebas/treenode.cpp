@@ -7,18 +7,18 @@
 using namespace std;
 
 //Constructor 1
-TreeNode::TreeNode(const TreeElement &data)
+TreeNode::TreeNode(const TreeElement &data): _data(data)
 {
-    _data->element = data.element;
-    _data->frequency = data.frequency;
+   // _data->element = data.element;
+    //_data->frequency = data.frequency;
     _parent = nullptr;
 }
 
 //Constructor 2
 TreeNode::TreeNode(const TreeElement &data, TreeNode *parent)
 {
-    _data->element = data.element;
-    _data->frequency = data.frequency;
+    //_data->element = data.element;
+   // _data->frequency = data.frequency;
     _parent = parent;
 }
 
@@ -59,16 +59,16 @@ void TreeNode::AddChild(TreeNode *child)
 }
 
 //GetData
-TreeElement *TreeNode::GetData()
+TreeElement TreeNode::GetData()
 {
-    return _data;
+   return _data;
 }
 
 //SetData
 void TreeNode::SetData(const TreeElement &data)
 {
-    _data->element = data.element;
-    _data->frequency = data.frequency;
+    //_data->element = data.element;
+    //_data->frequency = data.frequency;
 }
 
 //IsRoot

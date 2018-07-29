@@ -12,7 +12,17 @@ TablaFrecuencia::TablaFrecuencia(){
 void TablaFrecuencia::LlenarTablaFrecuencia(){
     for(int i=0;i<listaElementos.size();i++){
         TreeElement temporal;
-        temporal.element=listaElementos[i];
+
+        if(listaElementos[i]==32){
+            temporal.element="SP";
+        }else if(listaElementos[i]==10){
+            temporal.element="LF";
+        }else if(listaElementos[i]==13){
+            temporal.element="CR";
+        }else{
+            temporal.element=listaElementos[i];
+        }
+        
         temporal.frequency=listaFrecuencia[i];
         listaTablaFrecuencia.push_back(temporal);
     }

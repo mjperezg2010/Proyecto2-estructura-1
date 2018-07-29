@@ -19,9 +19,8 @@ Delete del tree node
 
 /*
 Pata imprimir la lista
-for (int i = 0; i < tabla.listaElementos.size(); i++)
-    {
-        cout << tabla.listaElementos[i] << " - " << tabla.listaFrecuencia[i]<<endl;
+for(int i=0;i<tablaDeFrecuencia.size();i++){
+        cout<<tablaDeFrecuencia[i].element<< " - "<<tablaDeFrecuencia[i].frequency<<endl;
     }
 
 
@@ -48,23 +47,44 @@ int main()
     elementoM.element = m;
     elementoM.frequency = ms;
     TreeNode *arbolM = new TreeNode(elementoM);*/
+
+    //Inciando programa
     cout<<"Ingrese el nombre del archivo de texto: ";
     string nombreArchivo;
     cin>>nombreArchivo;
+    vector<TreeElement> tablaDeFrecuencia; //Tabla que contiene los tree elements
     TablaFrecuencia tabla=Frecuencia(LeerArchivo(nombreArchivo));
     tabla.LlenarTablaFrecuencia();
-
-   /*for (int i = 0; i < tabla.listaElementos.size(); i++)
-    {
-        cout << tabla.listaElementos[i] << " - " << tabla.listaFrecuencia[i]<<endl;
+    tablaDeFrecuencia=tabla.listaTablaFrecuencia;
+    
+    //Imprimir lista
+   /* for(int i=0;i<tablaDeFrecuencia.size();i++){
+        cout<<tablaDeFrecuencia[i].element<< " - "<<tablaDeFrecuencia[i].frequency<<endl;
     }*/
 
     //Creacion del arbol
-    //while()
+    vector<TreeNode*> nodosArboles;
+   // while(tablaDeFrecuencia.size()==0){
+        //1 para la posicion final, 2 para la penultima
+       // string elemento1,elemento2;
+        //size_t frecuencia1,frecuencia2;
+        TreeNode* temporal1=new TreeNode(tablaDeFrecuencia[tablaDeFrecuencia.size()-1]);
+        TreeNode* temporal2=new TreeNode(tablaDeFrecuencia[tablaDeFrecuencia.size()-2]);
+        //cout<<temporal1->GetData().element<<endl;
 
-    for(int i=0;i<tabla.listaTablaFrecuencia.size();i++){
-        cout<<tabla.listaTablaFrecuencia[i].element<< " - "<<tabla.listaTablaFrecuencia[i].frequency<<endl;
-    }
+        //Creando el nuevo nodo
+       // if(tablaDeFrecuencia[tablaDeFrecuencia.size()-1].element[0]<tablaDeFrecuencia[tablaDeFrecuencia.size()-2].element[0]){
+            
+       // }
+
+
+
+
+    //}//Fin de ciclo de crear arbol
+
+    
+
+    
 
 
 

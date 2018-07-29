@@ -8,17 +8,18 @@ class TreeNode
   private:
     vector<TreeNode *> _children;
     TreeNode *_parent;
-    TreeElement *_data;
+    TreeElement _data;
 
   public:
     TreeNode (const TreeElement&);
+   // TreeNode (TreeElement);
     TreeNode (const TreeElement&,TreeNode*);
     ~TreeNode();
     vector<TreeNode*>& GetChildren();
     void SetParent(TreeNode*);
     void AddChild(const TreeElement&); 
     void AddChild(TreeNode*);
-    TreeElement* GetData();
+    TreeElement GetData();
     void SetData(const TreeElement&);
     bool IsRoot();
     bool IsLeaf();
