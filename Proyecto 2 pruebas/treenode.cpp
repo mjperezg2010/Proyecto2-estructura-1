@@ -12,6 +12,8 @@ TreeNode::TreeNode(const TreeElement &data): _data(data)
    // _data->element = data.element;
     //_data->frequency = data.frequency;
     _parent = nullptr;
+    
+
 }
 
 //Constructor 2
@@ -49,6 +51,7 @@ void TreeNode::SetParent(TreeNode *parent)
 void TreeNode::AddChild(const TreeElement &data)
 {
     TreeNode *newChild = new TreeNode(data);
+    
     _children.push_back(newChild);
 }
 
@@ -67,6 +70,7 @@ TreeElement TreeNode::GetData()
 //SetData
 void TreeNode::SetData(const TreeElement &data)
 {
+    _data=data;
     //_data->element = data.element;
     //_data->frequency = data.frequency;
 }

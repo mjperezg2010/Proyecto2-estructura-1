@@ -17,23 +17,16 @@ Delete del tree node
 
 */
 
-/*
-Pata imprimir la lista
-for(int i=0;i<tablaDeFrecuencia.size();i++){
-        cout<<tablaDeFrecuencia[i].element<< " - "<<tablaDeFrecuencia[i].frequency<<endl;
-    }
-
-
-
-*/
 
 using namespace std;
 
+//Prototipos de la funcion
 TablaFrecuencia Frecuencia(string);
 string LeerArchivo(string);
 vector<char> ListaCaracteres(vector<char>);
 vector<int> ListaPosiciones(vector<int>);
 vector<TreeElement> Ordenar(vector<TreeElement>);
+void Algoritmo(TreeNode);
 
 int main()
 {
@@ -50,7 +43,8 @@ int main()
     cout << "Ingrese el nombre del archivo de texto: ";
     string nombreArchivo;
     cin >> nombreArchivo;
-    vector<TreeElement> tablaDeFrecuencia; //Tabla que contiene los tree elements
+     //Tabla que contiene los tree elements
+    vector<TreeElement> tablaDeFrecuencia;
     TablaFrecuencia tabla = Frecuencia(LeerArchivo(nombreArchivo));
     tabla.LlenarTablaFrecuencia();
     tablaDeFrecuencia = tabla.listaTablaFrecuencia;
@@ -61,7 +55,7 @@ int main()
         cout << tablaDeFrecuencia[i].element << " - " << tablaDeFrecuencia[i].frequency << endl;
     }
 
-    //tablaDeFrecuencia=
+    
 
     //Creacion del arbol
     vector<TreeNode *> nodosArboles;
@@ -70,23 +64,22 @@ int main()
         //1 para la posicion final, 2 para la penultima
         string elemento1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].element, elemento2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].element;
         size_t frecuencia1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].frequency, frecuencia2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].frequency;
-        //TreeNode *temporal1 = new TreeNode(tablaDeFrecuencia[tablaDeFrecuencia.size() - 1]);
-        //TreeNode *temporal2 = new TreeNode(tablaDeFrecuencia[tablaDeFrecuencia.size() - 2]);
-        //cout<<temporal1->GetData().element<<endl;
+      
 
         //Creando el nuevo nodo
         TreeNode *arbolTemporal;
         stringstream concatenar;
-        //if (tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].frequency < tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].frequency)
-        concatenar << elemento1 << elemento2; //tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].element[0] << tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].element[0];
+       //Datos del nuevo nodo
+        concatenar << elemento1 << elemento2; 
         string elementoArbol = concatenar.str();
-        int frecuenciaArbol = frecuencia1 + frecuencia2; // tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].frequency + tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].frequency;
+        int frecuenciaArbol = frecuencia1 + frecuencia2; 
         TreeElement temporal;
         temporal.element = elementoArbol;
         temporal.frequency = frecuenciaArbol;
         arbolTemporal = new TreeNode(temporal);
 
-        int posHijo1 = -1; // guardara la posiciion de su nuevo hijo si lo encuentra
+         // guardara la posiciion de su nuevo hijo si lo encuentra
+        int posHijo1 = -1;
         int posHijo2 = -1;
         for (int i = 0; i < nodosArboles.size(); i++)
         {
@@ -106,7 +99,7 @@ int main()
             }
         }
 
-         //Mirar si econtro a su nuevo hijo derecho
+         //Mirar si econtro a su nuevo hijo izquierdo
         if (posHijo1 > -1)
         {
             nodosArboles[posHijo1]->SetParent(arbolTemporal);
@@ -116,10 +109,11 @@ int main()
         {
             temporal.element = elemento1;
             temporal.frequency = frecuencia1;
-            arbolTemporal->AddChild(temporal);
+            TreeNode *newChild = new TreeNode(temporal);
+            arbolTemporal->AddChild(newChild);
         }
 
-        //Mirar si enconttro a su nuevo hijo izquierdo
+        //Mirar si enconttro a su nuevo hijo derecho
         if (posHijo2 > -1)
         {
             nodosArboles[posHijo2]->SetParent(arbolTemporal);
@@ -129,7 +123,8 @@ int main()
         {
             temporal.element = elemento2;
             temporal.frequency = frecuencia2;
-            arbolTemporal->AddChild(temporal);
+            TreeNode *newChild = new TreeNode(temporal);
+            arbolTemporal->AddChild(newChild);
         }
 
        
@@ -146,15 +141,16 @@ int main()
             tablaDeFrecuencia.push_back(nuevo);
 
             tablaDeFrecuencia = Ordenar(tablaDeFrecuencia);
-           // tablaDeFrecuencia = tabla.listaTablaFrecuencia;
+           
         }
 
     } ///Fin del ciclo de crear arboles
 
-    cout << nodosArboles[nodosArboles.size()-1]->GetData().element << endl;
-   cout<<nodosArboles[0]->GetData().element<<endl;
+    //cout<<nodosArboles[0]->GetChildren()[0]->GetChildren()[0]->GetData().element<<endl;
+   
 
-} //Fin de la funcion
+} //Fin del main 
+
 
 //Guardar el contenido del archivo de texto
 string LeerArchivo(string nombreArchivo)
@@ -175,10 +171,11 @@ string LeerArchivo(string nombreArchivo)
     archivo.close();
 
     return contenidoArchivo.str();
-}
+}//Fin del a funcion leer archivo
 
-//Tabla de frecuencia
 
+
+//Calculo de frecuencia
 TablaFrecuencia Frecuencia(string archivo)
 {
     string archivo1 = archivo;
@@ -237,10 +234,11 @@ TablaFrecuencia Frecuencia(string archivo)
 
     return tabla;
 
-} //Fin de la funcion
+} //Fin de la funcion Calcular frecuencia
+
+
 
 //Ordenar la tabla de frecuencia
-
 vector<TreeElement> Ordenar(vector<TreeElement> tabla)
 {
     //Ordenar posiciones
@@ -264,3 +262,21 @@ vector<TreeElement> Ordenar(vector<TreeElement> tabla)
 
     return tabla;
 }
+
+
+//Codificacion para mostrar el algoritmo de huffman
+void Algoritmo(TreeNode* raiz){
+    TreeNode* nodoTemporal;
+    //stringstream codigo;
+
+    nodoTemporal=raiz->GetChildren()[0];
+
+    while(nodoTemporal!=raiz){
+        if(nodoTemporal->IsLeaf()){
+           // if(nodoTemporal)
+        }
+        
+
+    }//FIn del while
+
+}//Fin
