@@ -59,7 +59,7 @@ int main()
     }
 
     //Creacion del arbol
-    while()
+    //while()
 
 
 
