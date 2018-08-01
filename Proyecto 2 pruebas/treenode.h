@@ -1,3 +1,10 @@
+/*
+Titulo: Clase TreeNode
+Proposito: Clase principal que implementa el arbol
+           que maneja el algoritmo.
+Fecha: 31/Julio/2018
+Elaborado por: Martín José Pérez Gálvez
+*/
 #include <vector>
 #include "treeelement.h"
 

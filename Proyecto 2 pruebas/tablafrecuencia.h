@@ -1,3 +1,10 @@
+/*
+Titulo: Clase TablaFrecuencia
+Proposito: clase que servira para guardar las listas
+           con las cuales se crea la tabla de frecuencia.
+Fecha: 31/Julio/2018
+Elaborado por: Martín José Pérez Gálvez
+*/
 #include <fstream>
 #include <vector>
 #include "treeelement.h"
