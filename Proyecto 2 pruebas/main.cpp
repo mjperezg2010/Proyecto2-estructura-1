@@ -204,7 +204,7 @@ TablaFrecuencia Frecuencia(string archivo)
     for (int i = 0; i < archivo1.length(); i++)
     {
         t = archivo1[i];
-        if (t != -108 && t != -109 && t != -103 && t != -128 && t != -30)
+        if (t>0/*t != -108 && t != -109 && t != -103 && t != -128 && t != -30*/)
         {
 
             if (archivo1.length() == (i + 1) && (archivo1[i] != archivo1[i - 1]))
