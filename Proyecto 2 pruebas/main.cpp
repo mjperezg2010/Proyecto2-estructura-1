@@ -10,17 +10,9 @@ Elaborado por: Martín José Pérez Gálvez
 #include <algorithm>
 #include <sstream>
 #include <fstream>
-#include <cstdlib>
 #include "treenode.h"
 #include "treeelement.h"
 #include "tablafrecuencia.h"
-/*
-Investigar
-Delete del tree node
-
-
-
-*/
 
 using namespace std;
 
@@ -34,7 +26,19 @@ vector<TreeElement> Ordenar2(vector<TreeElement>);
 void Algoritmo(TreeNode *, vector<TreeElement>);
 bool compare(TreeElement, TreeElement);
 
-//
+
+
+//Main Principal
+/*
+Aqui se llaman las funciones y se realiza el arbol usando la tabla de frecuencia.
+
+Parametros: int argc, representa 
+            char* argv[], represnta los elementos que se escriben en la linea de comando y los guarda en 
+                          este arreglo de caracteres
+Retorna:    
+
+Errores: si el argc es menor a se enviara un mensaje que dira Parametros faltan
+*/
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -42,17 +46,12 @@ int main(int argc, char *argv[])
         cout << "Parametros faltan" << endl;
     }
     else
-    {
-        //Inciando programa
-       /* cout << "Ingrese el nombre del archivo de texto: ";
-        string nombreArchivo;
-        cin >> nombreArchivo;*/
+    {       
         //Tabla que contiene los tree elements
         vector<TreeElement> tablaDeFrecuencia;
         vector<TreeElement> listaFrecuencia;
         string nombreArchivo2= argv[1];
-        //cout<<nombreArchivo2<<endl;
-        TablaFrecuencia tabla = Frecuencia(LeerArchivo(argv[1]/*nombreArchivo*/));
+        TablaFrecuencia tabla = Frecuencia(LeerArchivo(argv[1]));
 
         for (int i = 0; i < tabla.listaElementos.size(); i++)
         {
@@ -64,26 +63,22 @@ int main(int argc, char *argv[])
 
         tablaDeFrecuencia = tabla.listaTablaFrecuencia;
         listaFrecuencia = tabla.listaTablaFrecuencia;
-        //listaFrecuencia=tabla.listaTablaFrecuencia
-        //Imprimir lista
-
-        /* for (int i = 0; i < tablaDeFrecuencia.size(); i++)
-    {
-        // int valor = tablaDeFrecuencia[i].element[0];
-        cout << tablaDeFrecuencia[i].element << " - " << tablaDeFrecuencia[i].frequency << endl;
-    }*/
+        
 
         //Creacion del arbol
         vector<TreeNode *> nodosArboles;
         while (tablaDeFrecuencia.size() != 0)
         {
             //1 para la posicion final, 2 para la penultima
-            string elemento1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].element, elemento2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].element;
-            size_t frecuencia1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].frequency, frecuencia2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].frequency;
+            string elemento1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].element;
+            string elemento2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].element;
+            size_t frecuencia1 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 1].frequency;
+            size_t frecuencia2 = tablaDeFrecuencia[tablaDeFrecuencia.size() - 2].frequency;
 
             //Creando el nuevo nodo
             TreeNode *arbolTemporal;
             stringstream concatenar;
+
             //Datos del nuevo nodo
             concatenar << elemento1 << elemento2;
             string elementoArbol = concatenar.str();
@@ -153,29 +148,36 @@ int main(int argc, char *argv[])
                 nuevo.frequency = arbolTemporal->GetData().frequency;
                 tablaDeFrecuencia.push_back(nuevo);
 
-                tablaDeFrecuencia = Ordenar2(tablaDeFrecuencia);
+                tablaDeFrecuencia = Ordenar(tablaDeFrecuencia);
             }
 
         } ///Fin del ciclo de crear arboles
 
-        //cout << nodosArboles[nodosArboles.size() - 1] /*->GetChildren()[0]*/->GetData().element << endl;
         Algoritmo(nodosArboles[nodosArboles.size() - 1], listaFrecuencia);
     }
 
     return 0;
 } //Fin del main
 
+
+
 //Guardar el contenido del archivo de texto
+/*
+Funcion que lee el archivo de texto que se envia como parametro en el main  
+
+Parametros: string nombreArchivo, representa el nombre que tiene el archivo de texto que se abrira
+
+Retorna: un string que almacena todo el archivo de texto
+
+
+Errores: Si se envia un string que no sea un archivo de texto
+*/
 string LeerArchivo(string nombreArchivo)
 {
 
     ifstream archivo;
     string texto;
     stringstream contenidoArchivo,archivo1;
-
-   // archivo1<<nombreArchivo<<".txt";
-    
-    //nombreArchivo="test01.txt";
     archivo.open(nombreArchivo.c_str(), ios::in);
 
     while (!archivo.eof())
@@ -189,14 +191,24 @@ string LeerArchivo(string nombreArchivo)
     return contenidoArchivo.str();
 } //Fin del a funcion leer archivo
 
+
 //Calculo de frecuencia
+/*
+Funcion que lee todo el archivo de texto y separa los caracteres por frecuencia
+
+Parametros: string archivo, representa el archivo de texto que esta guardado en ese string
+
+Retorna: Retorna la tabla de frecuencia ya llena con los caracteres y ordenada por frecuencia
+
+Errores:
+*/
 TablaFrecuencia Frecuencia(string archivo)
 {
     string archivo1 = archivo;
     TablaFrecuencia tabla;
     //Ordenar alfabeticamente y repetidas
     stable_sort(archivo1.begin(), archivo1.end());
-    //cout<<archivo1<<endl;
+   
     vector<int> posicionL;
     int contador;
     vector<char> lista;
@@ -204,7 +216,7 @@ TablaFrecuencia Frecuencia(string archivo)
     for (int i = 0; i < archivo1.length(); i++)
     {
         t = archivo1[i];
-        if (t>0/*t != -108 && t != -109 && t != -103 && t != -128 && t != -30*/)
+        if (t>0)
         {
 
             if (archivo1.length() == (i + 1) && (archivo1[i] != archivo1[i - 1]))
@@ -227,7 +239,7 @@ TablaFrecuencia Frecuencia(string archivo)
         }
     }
 
-    // tabla.LlenarTablaFrecuencia();
+
     for (int i = 0; i < lista.size(); i++)
     {
         TreeElement temporal;
@@ -236,37 +248,10 @@ TablaFrecuencia Frecuencia(string archivo)
         temporal.frequency = posicionL[i];
         tabla.listaTablaFrecuencia.push_back(temporal);
 
-        // listaTablaFrecuencia.push_back(temporal);
+        
     }
-    // sort(tabla.listaTablaFrecuencia.begin(),tabla.listaFrecuencia.end(),compare);
+
     tabla.listaTablaFrecuencia = Ordenar(tabla.listaTablaFrecuencia);
-    /* char aux2;
-    int aux;
-
-    for (int i = 0; i < posicionL.size(); i++)
-    {
-        for (int j = 0; j < posicionL.size() - 1; j++)
-        {
-            if (posicionL[j] < posicionL[j + 1])
-            {
-                aux = posicionL[j];
-                aux2 = lista[j];
-                posicionL[j] = posicionL[j + 1];
-                lista[j] = lista[j + 1];
-                posicionL[j + 1] = aux;
-                lista[j + 1] = aux2;
-            }
-        }
-    }*/
-
-    /* for (int i = 0; i < lista.size(); i++)
-    {
-        cout << lista[i] << " ";
-    }
-
-
-   
-    cout << endl;*/
     tabla.listaElementos = lista;
     tabla.listaFrecuencia = posicionL;
 
@@ -274,38 +259,40 @@ TablaFrecuencia Frecuencia(string archivo)
 
 } //Fin de la funcion Calcular frecuencia
 
+
 //Ordenar la tabla de frecuencia
+/*
+Funcion que ordena la tabla de frecuencia alfabeticamente y por frecuencia
+
+Parametros: vector<TreeElement> tabla, representa un vector que tiene almacenados TreeElements para ordenarlos
+
+Retorna: El vector de TreeElements ordenados 
+
+Errores:
+*/
 vector<TreeElement> Ordenar(vector<TreeElement> tabla)
 {
     //Ordenar posiciones
-    //  TreeElement aux;
-    //char aux2;
-
-    /*for (int i = 0; i < tabla.size(); i++)
-    {
-        for (int j = 0; j < tabla.size() - 1; j++)
-        {
-            if (tabla[j].frequency < tabla[j + 1].frequency)
-            {
-                aux = tabla[j];
-                //aux2 = tabla.listaElementos[j];
-                tabla[j] = tabla[j + 1];
-                // tabla.listaElementos[j] = tabla.listaElementos[j + 1];
-                tabla[j + 1] = aux;
-                //tabla.listaElementos[j + 1] = aux2;
-            }
-        }
-    }*/
     sort(tabla.begin(), tabla.end(), compare);
 
     return tabla;
 }
 
+//Ordenar por frecuencia
+/*
+Funcion que ordena la tabla de frecuencia por frecuencia
+
+Parametros: vector<TreeElement> tabla, representa un vector que tiene almacenados TreeElements para ordenarlos
+
+Retorna: El vector de TreeElements ordenados 
+
+Errores:
+*/
+
 vector<TreeElement> Ordenar2(vector<TreeElement> tabla)
 {
     //Ordenar posiciones
     TreeElement aux;
-    //char aux2;
 
     for (int i = 0; i < tabla.size(); i++)
     {
@@ -314,20 +301,26 @@ vector<TreeElement> Ordenar2(vector<TreeElement> tabla)
             if (tabla[j].frequency < tabla[j + 1].frequency)
             {
                 aux = tabla[j];
-                //aux2 = tabla.listaElementos[j];
                 tabla[j] = tabla[j + 1];
-                // tabla.listaElementos[j] = tabla.listaElementos[j + 1];
                 tabla[j + 1] = aux;
-                //tabla.listaElementos[j + 1] = aux2;
             }
         }
     }
-    //sort(tabla.begin(),tabla.end(),compare);
 
     return tabla;
 }
 
+
 //Funcion para el sort
+/*
+Funcion que servira para enviarse como parametro al sort que ordenara los TreeElements
+
+Parametros: vector<TreeElement> tabla, representa un vector que tiene almacenados TreeElements para ordenarlos
+
+Retorna: true si la comparacion que se retorna es verdadero, false si la comparacion es false
+
+Errores:
+*/
 bool compare(TreeElement a, TreeElement b)
 {
     if (a.frequency == b.frequency)
@@ -340,7 +333,17 @@ bool compare(TreeElement a, TreeElement b)
     }
 }
 
+
 //Codificacion para mostrar el algoritmo de huffman
+/*
+Funcion que servira para codificar los caracteres contenidos en la tabla de frecuencia
+
+Parametros: vector<TreeElement> tabla, representa un vector que tiene almacenados TreeElements para ordenarlos
+
+Retorna: true si la comparacion que se retorna es verdadero, false si la comparacion es false
+
+Errores:
+*/
 void Algoritmo(TreeNode *raiz, vector<TreeElement> listaFrecuencia)
 {
 
@@ -358,7 +361,7 @@ void Algoritmo(TreeNode *raiz, vector<TreeElement> listaFrecuencia)
         letraTemporal = nodoTemporal->GetData().element[i];
 
         while (!nodoTemporal->IsLeaf())
-        { //Reivisar en hijo izquierdo
+        { //Revisar en hijo izquierdo
             for (int i = 0; i < nodoTemporal->GetChildren()[0]->GetData().element.size(); i++)
             {
                 if (letraTemporal == nodoTemporal->GetChildren()[0]->GetData().element[i])
@@ -378,6 +381,7 @@ void Algoritmo(TreeNode *raiz, vector<TreeElement> listaFrecuencia)
                 }
             }
 
+            //Desicion para concatenar el codigo
             if (hijo)
             {
                 nodoTemporal = nodoTemporal->GetChildren()[0];
@@ -394,7 +398,7 @@ void Algoritmo(TreeNode *raiz, vector<TreeElement> listaFrecuencia)
         nodoTemporal = raiz;
         listaCodigos.push_back(codigo.str());
         listaNombres.push_back(letraTemporal);
-        // codigo<<"-";
+        
     }
 
     vector<string> listaHuffman2;
@@ -425,5 +429,7 @@ void Algoritmo(TreeNode *raiz, vector<TreeElement> listaFrecuencia)
             cout << "{key: " << listaFrecuencia[i].element << ", code: " << listaHuffman2[i] << "}" << endl;
         }
     }
+
+    delete raiz;
 
 } //Fin

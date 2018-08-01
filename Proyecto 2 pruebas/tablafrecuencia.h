@@ -20,18 +20,9 @@ class TablaFrecuencia{
 
     public:
         TablaFrecuencia();
-       // vector<char> GetListaElementos();
-     //vector<int> GetListaFrecuencia();
         vector<char> listaElementos;
         vector<int> listaFrecuencia;
-        string LeerArchivo();
-        void CrearTabla(string);
         vector<TreeElement> listaTablaFrecuencia;//Tablafecuencia
-        void LlenarTablaFrecuencia();
-       
-
-
-
-
+      
 };
 #endif
